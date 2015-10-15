@@ -186,11 +186,7 @@ process_main_page() {
 ##############################################################################
 exit_if_bad_file() {
   fpath="$1"
-  if [ ! -f "$fpath" ]; then
-    #echo "File not found: '$fpath'" >&2
-    #exit 1
-    usage_exit "File not found: '$fpath'" 1
-  fi
+  [ ! -f "$fpath" ] && usage_exit "File not found: '$fpath'" 1
 }
 
 ##############################################################################
@@ -206,7 +202,6 @@ usage_exit() {
   echo "Usage:  `basename $0`  --get|-g  |  --process|-p" >&2
   echo "First get/download the web pages, then process the downloaded pages" >&2
   exit "$exit_code"
-
 }
 
 ##############################################################################
@@ -219,6 +214,7 @@ get_command_line_opts() {
 
   elif [ "$1" = --help -o "$1" = -h ]; then
     usage_exit "" 0
+
   else
     usage_exit "" 2
   fi
