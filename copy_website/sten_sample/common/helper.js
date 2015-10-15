@@ -4,8 +4,8 @@
 
 /*
  * POST to a target URL using an a-tag.  Invocation examples:
- *   <a onclick="post('myscript.php', {field1: 'value1'})" href="#" target="_top">VALUE1</a>
- *   <a onclick="post('http://example.com/mypage.html', {})" href="#" target="_top">VALUE1</a>
+ *   <a onclick="post('myscript.php', {field1: 'value1'})" href="javascript:void(0)" target="_top">VALUE1</a>
+ *   <a onclick="post('http://example.com/mypage.html', {})" href="javascript:void(0)" target="_top">VALUE1</a>
  *
  * Ref: http://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
  */
