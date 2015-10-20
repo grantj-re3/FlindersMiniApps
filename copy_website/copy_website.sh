@@ -163,7 +163,7 @@ process_main_page() {
   #
   # This will allow our a-tags to do POST rather than GET.
   # That is:  href="FMPro?...&az=z&..."
-  # becomes:  onclick="post('abbr.php', {t: 'az', q: 'z'})" href="javascript:void(0)"
+  # becomes:  onclick="post('index.php', {t: 'az', q: 'z'})" href="javascript:void(0)"
   echo
   echo "Processing main page"
 
@@ -179,7 +179,7 @@ process_main_page() {
       }
     ' |
     sed '
-      s~href="FMPro?[^"]*az=\(.\)[^"]*"~onclick="post('\''abbr.php'\'', {t: '\''az'\'', q: '\''\1'\''})" href="javascript:void(0)"~g
+      s~href="FMPro?[^"]*az=\(.\)[^"]*"~onclick="post('\''index.php'\'', {t: '\''az'\'', q: '\''\1'\''})" href="javascript:void(0)"~g
     ' > $dir_jr1/${fname_main}.az_post
 }
 
