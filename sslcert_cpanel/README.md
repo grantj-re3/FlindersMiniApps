@@ -3,6 +3,9 @@
 
 ## Assumptions
 
+- **IMPORTANT security consideration:** Assumes your CPanel traffic
+  already uses HTTPS (perhaps via a self-signed SSL cert.) so that
+  your private key is uploaded via an encrypted channel.
 - Assumes SNI (Server Name Indication) support which allows you (or your
   CPanel hosting provider) to host multiple SSL certificates for different
   domains on the same IP address.
@@ -33,7 +36,10 @@ similar for other certificate authorities/providers.
 
 ### "Upload" the private key
 
-Convert to PEM format using passphrase.
+Convert to PEM format using passphrase. For **security reasons**
+the output of the command below should either not be stored or
+should stored in a secure password-protected and/or encrypted
+file.
 
 ```
 # Run this command under Linux, Unix or similar environment.
@@ -43,7 +49,9 @@ Convert to PEM format using passphrase.
 $ openssl rsa -in mydomain.key -outform PEM
 ```
 
-Upload the converted PEM format private key.
+Upload the converted PEM format private key. For **security reasons**
+this key should be uploaded via an encrypted channel (ie. CPanel
+running via HTTPS).
 
 - CPanel > Home > SSL/TLS > Private Keys (KEY)
 - Paste private key from output of above command (including BEGIN and END lines)
