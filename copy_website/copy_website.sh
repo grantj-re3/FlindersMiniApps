@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# Copyright (c) 2015, Flinders University, South Australia. All rights reserved.
-# Contributors: Library, Information Services, Flinders University.
+# Copyright (c) 2015-2018, Flinders University, South Australia. All rights reserved.
+# Contributors: Library, Corporate Services, Flinders University.
 # See the accompanying LICENSE file (or http://opensource.org/licenses/BSD-3-Clause).
 #
 # This script does the following:
@@ -22,9 +22,10 @@
 #   manipulate STEN tokens, etc.
 #
 ##############################################################################
-url_main="http://example.com/myscript?x=xx&y=yy&z=zz"
-url_az_part="http://example.com/myscript?x=x1&y=y1&z=z1"
-url_jr_part="http://example.com/myscript?x=x2&y=y2&z=z2"
+url_prefix="http://example.com:8080/fm/public/abbrev/FMPro?-db=leglabbr"
+url_main="$url_prefix&-format=search&-lay=web&-max=all&-sortfield=abbreviation&az=g&-find="
+url_az_part="$url_prefix&-format=results&-lay=web&-max=all&-sortfield=abbreviation&-find="
+url_jr_part="$url_prefix&-format=results&-lay=web&-max=all&-sortfield=abbreviation&-Error=err&-find="
 
 dir_az1="cws_az_get"
 dir_az2="cws_az_proc"
@@ -199,14 +200,17 @@ usage_exit() {
     echo >&2
   fi
 
-  echo "Usage:  `basename $0`  --get|-g  |  --process|-p" >&2
+  echo "Usage:  `basename $0`  [--get|-g  |  --process|-p]" >&2
   echo "First get/download the web pages, then process the downloaded pages" >&2
   exit "$exit_code"
 }
 
 ##############################################################################
 get_command_line_opts() {
-  if [ "$1" = --get -o "$1" = -g ]; then
+  if [ "$1" = "" ]; then
+    opt1="all"		# Get & process web pages
+
+  elif [ "$1" = --get -o "$1" = -g ]; then
     opt1="get"		# Get web pages
 
   elif [ "$1" = --process -o "$1" = -p ]; then
@@ -221,11 +225,22 @@ get_command_line_opts() {
 }
 
 ##############################################################################
+do_action() {
+  opt1="$1"
+  eval "${opt1}_pages_az"
+  eval "${opt1}_pages_jurisdiction"
+  [ $opt1 = process ] && process_main_page
+}
+
+##############################################################################
 # Main()
 ##############################################################################
 get_command_line_opts $@
+if [ "$opt1" = all ]; then
+  do_action  get
+  do_action  process
 
-eval "${opt1}_pages_az"
-eval "${opt1}_pages_jurisdiction"
-[ $opt1 = process ] && process_main_page
+else
+  do_action  $opt1
+fi
 
