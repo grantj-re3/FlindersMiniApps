@@ -24,7 +24,9 @@ similar for other certificate authorities/providers.
 ### Download the certificates from GeoTrust.
 
 - Navigate to the Geotrust URL "DOWNLOAD AND INSTALL YOUR CERTIFICATE"
-- Get Started > Apache > HTTP Server > Download
+- Get Started > Apache > HTTP Server > Download. (If the "Get Started"
+  button takes you to a generic page, try using a different web browser,
+  eg. Internet Explorer)
 - Unzip to obtain ssl_certificate.crt and IntermediateCA.crt
 
 ### Upload the certificate to your hosting provider
@@ -62,9 +64,9 @@ running via HTTPS).
 ### Install the certificate
 
 - CPanel > Home > SSL/TLS > Install and Manage SSL for your site (HTTPS)
-- Browser Certificates > Select the above cert. > Use Certificate.
+- Browse Certificates > Select the above cert. > Use Certificate.
   The cert and private key will auto-populate.
-- Paste the IntermediateCA.crt into CABUNDLE
+- Paste the IntermediateCA.crt into CABUNDLE (if it doesn't auto-populate)
 - Install certificate
 
 ### Test
