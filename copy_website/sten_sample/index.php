@@ -20,10 +20,14 @@
   $param = array();
   foreach ($fields as $field) {
     // Prefer to use POST field
-    if (strlen($_POST[$field]) > 0)
+    if (array_key_exists($field, $_POST) && strlen($_POST[$field]) > 0)
       $ref_value =& $_POST[$field];	// Use reference/pointer (as string may be huge due to mis-use)
-    else
+
+    elseif (array_key_exists($field, $_GET) && strlen($_GET[$field]) > 0)
       $ref_value =& $_GET[$field];	// Use reference/pointer (as string may be huge due to mis-use)
+
+    else
+      $ref_value = "";
 
     // Too long
     if (strlen($ref_value) > $max_chars_http_var) {
